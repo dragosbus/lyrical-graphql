@@ -17,22 +17,21 @@ class SongList extends Component {
 		super(props)
 		this.deleteSong = this.deleteSong.bind(this)
 	}
-	deleteSong(song) {
+	deleteSong(id) {
 		this.props.mutate({
 			variables: {
-				id: song.id
+				id: id
 			},
-			refetchQueries: [{query}]
-		})
-		console.log(song)
+		}).then(() => this.props.data.refetch())
 	}
+	//used refetch function because the graphql knows the component knows about the query to be refetched(have this.props.data) 
     renderSongs() {
-        return this.props.data.songs.map(song => (
-            <li key={song.id} className="collection-item">
-							{song.title}
+        return this.props.data.songs.map(({id, title}) => (
+            <li key={id} className="collection-item">
+							{title}
 							<i 
 								className="material-icons" 
-								onClick={() => this.deleteSong(song)}
+								onClick={() => this.deleteSong(id)}
 							>
 								delete
 							</i>
