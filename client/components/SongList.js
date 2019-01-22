@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
 import { graphql } from 'react-apollo'
+import { Link } from 'react-router'
+import query from '../queries/fetchSongs'
 
-const query = gql `
-	{
-		songs {
-			id
-			title
-		}
-	}
-`;
 
 class SongList extends Component {
     renderSongs() {
@@ -20,11 +13,16 @@ class SongList extends Component {
         ))
     }
     render() {
-        const {loading} = this.props.data
+        const { loading } = this.props.data
         if (loading) return <div>Loading</div>
         const { songs } = this.props.data
         return (
-            <ul className="collection">{this.renderSongs()}</ul>
+            <div>
+            	<ul className="collection">{this.renderSongs()}</ul>
+            	<Link to="/songs/new" className="btn-floating btn-large red light">
+            		<i className="material-icons">add</i>
+            	</Link>
+            </div>
         );
     }
 }
