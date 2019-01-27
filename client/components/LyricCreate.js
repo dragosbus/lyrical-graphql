@@ -9,6 +9,7 @@ const mutation = gql`
 			lyrics {
                 id
 				content
+                likes
 			}
 		}
 	}
@@ -27,8 +28,7 @@ class LyricCreate extends Component {
     		variables:{
     			content: this.state.content,
     			songId: this.props.songId
-    		},
-            refetchQueries: ['songById']
+    		}
     	}).then(() => this.setState({content: ''}))
     }
 
