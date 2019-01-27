@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import {Link} from 'react-router'
+import LyricCreate from './LyricCreate'
 
 const SongById = gql `
-	query songById($id: ID) {
+	query songById($id: ID!) {
 		song(id: $id) {
 			id
 			title
@@ -17,26 +19,17 @@ const SongById = gql `
 `
 
 export class SongDetail extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            data: null,
-        }
-    }
-    componentDidMount() {
-        const { match, data } = this.props
-        console.log(data)
-        if (data.loading) this.setState({ data: 'loading' })
-
-        console.log(this.props)
-    }
     render() {
-        const { data } = this.state
-        if (data === 'loading') return <div>Loading</div>
+        const { data } = this.props
+        const { song } = data
+        if (!song) return <div>Loading</div>
+
         return (
             <div>
-				<h3>Song</h3>
-			</div>
+            	<Link to="/">back</Link>
+							<h3>{song.title}</h3>
+							<LyricCreate/>
+						</div>
         );
     }
 }

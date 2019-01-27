@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import { Link } from 'react-router'
 import query from '../queries/fetchSongs'
 
-const mutation = gql`
+const mutation = gql `
 	mutation deleteMutation($id: ID) {
 		deleteSong(id: $id) {
 			title
@@ -13,22 +13,22 @@ const mutation = gql`
 `
 
 class SongList extends Component {
-	constructor(props) {
-		super(props)
-		this.deleteSong = this.deleteSong.bind(this)
-	}
-	deleteSong(id) {
-		this.props.mutate({
-			variables: {
-				id: id
-			},
-		}).then(() => this.props.data.refetch())
-	}
-	//used refetch function because the graphql knows the component knows about the query to be refetched(have this.props.data) 
+    constructor(props) {
+        super(props)
+        this.deleteSong = this.deleteSong.bind(this)
+    }
+    deleteSong(id) {
+        this.props.mutate({
+            variables: {
+                id: id
+            },
+        }).then(() => this.props.data.refetch())
+    }
+    //used refetch function because the graphql knows the component knows about the query to be refetched(have this.props.data) 
     renderSongs() {
-        return this.props.data.songs.map(({id, title}) => (
+        return this.props.data.songs.map(({ id, title }) => (
             <li key={id} className="collection-item">
-							{title}
+							<Link to={`songs/${id}`}>{title}</Link>
 							<i 
 								className="material-icons" 
 								onClick={() => this.deleteSong(id)}
