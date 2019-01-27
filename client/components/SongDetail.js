@@ -28,7 +28,7 @@ export class SongDetail extends Component {
             <div>
             	<Link to="/">back</Link>
 							<h3>{song.title}</h3>
-							<LyricCreate/>
+							<LyricCreate songId={this.props.params.id}/>
 						</div>
         );
     }
